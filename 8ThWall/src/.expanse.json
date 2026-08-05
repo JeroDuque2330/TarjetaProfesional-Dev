@@ -47,12 +47,12 @@
       "material": null,
       "name": "Camera",
       "position": [
-        0,
-        2,
-        3
+        -0.7411441040187835,
+        2.614391148403377,
+        2.525200829637708
       ],
       "rotation": [
-        0.0004436887233141012,
+        0.00044368872331410124,
         0.9659425615285845,
         -0.25875089860082223,
         0.0016563336561801576
@@ -154,6 +154,147 @@
         "name": "TarjetaProfe"
       },
       "order": 6.373509013138244
+    },
+    "f68f517b-4d60-4960-a637-0da9d937912a": {
+      "id": "f68f517b-4d60-4960-a637-0da9d937912a",
+      "position": [
+        -0.871112508637016,
+        1.3803041404649177,
+        -1.3670294438604018
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        2.399993016280412,
+        2.4422124488263717,
+        1.0000000532124813
+      ],
+      "geometry": {
+        "type": "plane",
+        "width": 1,
+        "height": 1
+      },
+      "material": {
+        "type": "basic",
+        "color": "#FFFFFF",
+        "textureSrc": {
+          "type": "asset",
+          "asset": "assets/Video_.mp4"
+        }
+      },
+      "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
+      "components": {},
+      "name": "Plano",
+      "order": 7.399586142219819,
+      "videoControls": {}
+    },
+    "f9736927-15fb-4047-bfa2-87fd5ac7ffe3": {
+      "id": "f9736927-15fb-4047-bfa2-87fd5ac7ffe3",
+      "position": [
+        0,
+        0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "f68f517b-4d60-4960-a637-0da9d937912a",
+      "components": {},
+      "ui": {
+        "type": "3d",
+        "width": 100,
+        "height": 36,
+        "background": "#ad50ff",
+        "borderRadius": 18,
+        "flexDirection": "row",
+        "backgroundOpacity": 1,
+        "padding": "10",
+        "gap": "6",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "name": "Button",
+      "order": 5.781078692337625
+    },
+    "6fe0dd7e-beef-49aa-be50-c33b1e7efd2e": {
+      "id": "6fe0dd7e-beef-49aa-be50-c33b1e7efd2e",
+      "position": [
+        -0.323,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "f9736927-15fb-4047-bfa2-87fd5ac7ffe3",
+      "components": {},
+      "name": "Icon",
+      "ui": {
+        "width": 16,
+        "height": 16,
+        "image": {
+          "type": "url",
+          "url": "https://cdn.8thwall.com/web/assets/sprites/8w-icon-m8j35d7y.png"
+        },
+        "backgroundOpacity": 1
+      },
+      "order": 0.014952728539884108
+    },
+    "c9c1804d-2116-4eee-88c2-ee675ff0e32e": {
+      "id": "c9c1804d-2116-4eee-88c2-ee675ff0e32e",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "f9736927-15fb-4047-bfa2-87fd5ac7ffe3",
+      "components": {},
+      "name": "Text",
+      "ui": {
+        "width": 50,
+        "height": 14,
+        "text": "Button",
+        "color": "#ffffff",
+        "fontSize": 16
+      },
+      "order": 1.2768869785494683
     }
   },
   "spaces": {
