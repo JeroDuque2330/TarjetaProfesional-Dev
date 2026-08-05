@@ -89,6 +89,39 @@
       ],
       "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
       "order": 0.6644431107322474
+    },
+    "5d1473d9-3f0e-4f29-ac44-c2c12dd3494a": {
+      "id": "5d1473d9-3f0e-4f29-ac44-c2c12dd3494a",
+      "position": [
+        -0.10510788994191939,
+        0,
+        -0.9982802510393718
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
+      "components": {},
+      "gltfModel": {
+        "src": {
+          "type": "asset",
+          "asset": "assets/Snoop.glb"
+        },
+        "animationClip": "",
+        "loop": true
+      },
+      "name": "Snoop.glb",
+      "order": 2.73490305132273
     }
   },
   "spaces": {
