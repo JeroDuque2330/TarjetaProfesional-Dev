@@ -1,0 +1,23 @@
+{
+  "type": "PLANAR",
+  "properties": {
+    "top": 0,
+    "left": 0,
+    "width": 960,
+    "height": 1280,
+    "isRotated": false,
+    "originalWidth": 960,
+    "originalHeight": 1280
+  },
+  "imagePath": "image-targets/TarjetaProfe_luminance.jpg",
+  "metadata": null,
+  "name": "TarjetaProfe",
+  "resources": {
+    "originalImage": "TarjetaProfe_original.jpg",
+    "croppedImage": "TarjetaProfe_cropped.jpg",
+    "thumbnailImage": "TarjetaProfe_thumbnail.jpg",
+    "luminanceImage": "TarjetaProfe_luminance.jpg"
+  },
+  "created": 1785901273592,
+  "updated": 1785901273592
+}

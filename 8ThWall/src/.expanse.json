@@ -32,9 +32,13 @@
       "camera": {
         "type": "perspective",
         "xr": {
-          "desktop": "3D",
-          "xrCameraType": "3dOnly",
-          "headset": "disabled"
+          "desktop": "disabled",
+          "xrCameraType": "world",
+          "headset": "disabled",
+          "phone": "AR",
+          "world": {
+            "disableWorldTracking": true
+          }
         }
       },
       "components": {},
@@ -90,18 +94,51 @@
       "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
       "order": 0.6644431107322474
     },
-    "5d1473d9-3f0e-4f29-ac44-c2c12dd3494a": {
-      "id": "5d1473d9-3f0e-4f29-ac44-c2c12dd3494a",
+    "ccf8ac42-b656-4264-84ad-43c579b75198": {
+      "id": "ccf8ac42-b656-4264-84ad-43c579b75198",
       "position": [
-        -0.10510788994191939,
-        0,
-        -0.9982802510393718
+        -0.06838007932439938,
+        0.3436406566218718,
+        -0.06312800072308826
       ],
       "rotation": [
+        0.7071067811865475,
         0,
         0,
+        0.7071067811865476
+      ],
+      "scale": [
+        0.7371831783955459,
+        0.6000000000000001,
+        0.6000000000000001
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
+      "components": {},
+      "gltfModel": {
+        "src": {
+          "type": "asset",
+          "asset": "assets/Snoop_Final.glb"
+        },
+        "animationClip": "Bailecito Hip Hop",
+        "loop": true
+      },
+      "name": "Snoop_Final.glb",
+      "order": 4.551449927932822
+    },
+    "d3095e1b-bea4-4bc3-a74c-2441e054fe7b": {
+      "id": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
+      "position": [
+        -0.05458437117628462,
+        0.06312800072308819,
+        -0.6740009820787723
+      ],
+      "rotation": [
+        -0.7071067811865475,
         0,
-        1
+        0,
+        0.7071067811865476
       ],
       "scale": [
         1,
@@ -112,16 +149,11 @@
       "material": null,
       "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
       "components": {},
-      "gltfModel": {
-        "src": {
-          "type": "asset",
-          "asset": "assets/Snoop.glb"
-        },
-        "animationClip": "",
-        "loop": true
+      "name": "Objetivo de la imagen",
+      "imageTarget": {
+        "name": "TarjetaProfe"
       },
-      "name": "Snoop.glb",
-      "order": 2.73490305132273
+      "order": 6.373509013138244
     }
   },
   "spaces": {
