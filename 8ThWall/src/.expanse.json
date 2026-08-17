@@ -151,27 +151,27 @@
       "components": {},
       "name": "Objetivo de la imagen",
       "imageTarget": {
-        "name": "TarjetaProfe"
+        "name": "TarjetaProfesional"
       },
       "order": 6.373509013138244
     },
     "f68f517b-4d60-4960-a637-0da9d937912a": {
       "id": "f68f517b-4d60-4960-a637-0da9d937912a",
       "position": [
-        -0.871112508637016,
-        1.3803041404649177,
-        -1.3670294438604018
+        0,
+        0.3,
+        0.1
       ],
       "rotation": [
+        0.7071067811865475,
         0,
         0,
-        0,
-        1
+        0.7071067811865476
       ],
       "scale": [
-        2.399993016280412,
-        2.4422124488263717,
-        1.0000000532124813
+        0.6,
+        0.6,
+        0.6
       ],
       "geometry": {
         "type": "plane",
@@ -186,7 +186,7 @@
           "asset": "assets/Video_.mp4"
         }
       },
-      "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
+      "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
       "components": {},
       "name": "Plano",
       "order": 7.399586142219819,
@@ -295,6 +295,105 @@
         "fontSize": 16
       },
       "order": 1.2768869785494683
+    },
+    "b1111111-wapp-4000-8000-000000000001": {
+      "id": "b1111111-wapp-4000-8000-000000000001",
+      "name": "WhatsApp",
+      "position": [
+        -0.26,
+        -0.42,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
+      "components": {},
+      "ui": {
+        "type": "3d",
+        "width": 36,
+        "height": 36,
+        "borderRadius": 18,
+        "background": "#25D366",
+        "backgroundOpacity": 0.2
+      },
+      "order": 8.1
+    },
+    "b2222222-insta-4000-8000-000000000002": {
+      "id": "b2222222-insta-4000-8000-000000000002",
+      "name": "Instagram",
+      "position": [
+        0.0,
+        -0.42,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
+      "components": {},
+      "ui": {
+        "type": "3d",
+        "width": 36,
+        "height": 36,
+        "borderRadius": 18,
+        "background": "#E1306C",
+        "backgroundOpacity": 0.2
+      },
+      "order": 8.2
+    },
+    "b3333333-spoti-4000-8000-000000000003": {
+      "id": "b3333333-spoti-4000-8000-000000000003",
+      "name": "Spotify",
+      "position": [
+        0.26,
+        -0.42,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "geometry": null,
+      "material": null,
+      "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
+      "components": {},
+      "ui": {
+        "type": "3d",
+        "width": 36,
+        "height": 36,
+        "borderRadius": 18,
+        "background": "#1DB954",
+        "backgroundOpacity": 0.2
+      },
+      "order": 8.3
     }
   },
   "spaces": {
