@@ -69,6 +69,11 @@ const config = {
     ],
   },
   mode: 'production',
+  performance: false,
+  stats: {
+    warnings: false,
+    errors: true,
+  },
   context: srcPath,
   externals: {
     '@8thwall/ecs': 'window.ecs',
