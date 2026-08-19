@@ -342,8 +342,8 @@
       "id": "b1111111-wapp-4000-8000-000000000001",
       "name": "WhatsApp",
       "position": [
-        -0.24245649538101038,
-        -0.3997994183059203,
+        -0.19581612646620244,
+        -0.35215488393431227,
         0.05017281760330736
       ],
       "rotation": [
@@ -363,6 +363,11 @@
       "components": {
         "comp-wapp": {
           "id": "comp-wapp",
+          "name": "open-whatsapp",
+          "parameters": {}
+        },
+        "comp-url-wapp": {
+          "id": "comp-url-wapp",
           "name": "open-url-button",
           "parameters": {
             "url": "https://wa.me/573154445000"
@@ -384,8 +389,8 @@
       "name": "Instagram",
       "position": [
         0,
-        -0.42,
-        0.05
+        -0.355722383671892,
+        0.04999999999999999
       ],
       "rotation": [
         0,
@@ -404,6 +409,11 @@
       "components": {
         "comp-insta": {
           "id": "comp-insta",
+          "name": "open-instagram",
+          "parameters": {}
+        },
+        "comp-url-insta": {
+          "id": "comp-url-insta",
           "name": "open-url-button",
           "parameters": {
             "url": "https://www.instagram.com/jeronimoduque423/"
@@ -424,9 +434,9 @@
       "id": "b3333333-spoti-4000-8000-000000000003",
       "name": "Spotify",
       "position": [
-        0.26,
-        -0.42,
-        0.05
+        0.1926744152073049,
+        -0.3587699617911454,
+        0.04999999999999999
       ],
       "rotation": [
         0,
@@ -445,6 +455,11 @@
       "components": {
         "comp-spoti": {
           "id": "comp-spoti",
+          "name": "open-spotify",
+          "parameters": {}
+        },
+        "comp-url-spoti": {
+          "id": "comp-url-spoti",
           "name": "open-url-button",
           "parameters": {
             "url": "https://open.spotify.com/user/o0gt0327bv62udbgzyjh0qomt?si=076634e60fe84ede"
