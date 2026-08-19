@@ -12,77 +12,70 @@ ecs.registerBehavior((world) => {
   for (const eid of world.allEntities) {
     if (attachedEntities.has(eid)) continue
 
-    const threeObj = world.three && world.three.entityToObject ? world.three.entityToObject.get(eid) : null
-    const name = threeObj && threeObj.name ? threeObj.name.toLowerCase() : ''
-
-    // 1. Personaje Snoop: Cambiar animaciones al tocarlo
-    if (name.includes('snoop') || (ecs.GltfModel.has(world, eid) && name === '')) {
+    // 1. Personaje 3D (Snoop GLTF) -> Cambiar animación al hacer clic
+    if (ecs.GltfModel.has(world, eid)) {
       attachedEntities.add(eid)
       const clips = ['Bailecito Hip Hop', 'Bailecito Tranquilito']
       let animIndex = 0
 
-      console.log('[8thWall Interaction] Personaje Snoop vinculado:', eid)
+      console.log('[8thWall Interaction] Personaje GLTF Snoop vinculado:', eid)
 
-      const onCharClick = () => {
+      world.events.addListener(eid, 'click', () => {
         animIndex = (animIndex + 1) % clips.length
         const nextClip = clips[animIndex]
-        console.log('[8thWall Interaction] Cambiando animación de Snoop a:', nextClip)
+        console.log('[8thWall Interaction] Cambiando animación a:', nextClip)
         ecs.GltfModel.mutate(world, eid, (cursor) => {
           cursor.animationClip = nextClip
         })
+      })
+      continue
+    }
+
+    // 2. Elementos UI 3D (Botón de Video y Botones de Redes Sociales)
+    if (ecs.Ui.has(world, eid)) {
+      const parentEid = world.getParent ? world.getParent(eid) : null
+
+      // Botón de Video (hijo del Plano de Video)
+      if (parentEid && ecs.VideoControls.has(world, parentEid)) {
+        attachedEntities.add(eid)
+        console.log('[8thWall Interaction] Botón de Video vinculado:', eid)
+
+        world.events.addListener(eid, 'click', () => {
+          const controls = ecs.VideoControls.get(world, parentEid)
+          const isPaused = controls ? controls.paused : false
+          console.log('[8thWall Interaction] Alternando reproducción de video (pausa =', !isPaused, ')')
+          ecs.VideoControls.set(world, parentEid, { paused: !isPaused })
+        })
+        continue
       }
 
-      world.events.addListener(eid, 'click', onCharClick)
-    }
+      // Botones de Redes Sociales (WhatsApp, Instagram, Spotify)
+      const threeObj = world.three && world.three.entityToObject ? world.three.entityToObject.get(eid) : null
+      if (threeObj) {
+        attachedEntities.add(eid)
+        const name = (threeObj.name || '').toLowerCase()
+        const x = threeObj.position.x
 
-    // 2. WhatsApp: Abrir enlace al tocar
-    if (name.includes('whatsapp') || name.includes('wapp')) {
-      attachedEntities.add(eid)
-      console.log('[8thWall Interaction] Botón WhatsApp vinculado:', eid)
-      world.events.addListener(eid, 'click', () => {
-        console.log('[8thWall Interaction] Abriendo WhatsApp')
-        window.open(SOCIAL_URLS.whatsapp, '_blank')
-      })
-    }
-
-    // 3. Instagram: Abrir enlace al tocar
-    if (name.includes('instagram') || name.includes('insta')) {
-      attachedEntities.add(eid)
-      console.log('[8thWall Interaction] Botón Instagram vinculado:', eid)
-      world.events.addListener(eid, 'click', () => {
-        console.log('[8thWall Interaction] Abriendo Instagram')
-        window.open(SOCIAL_URLS.instagram, '_blank')
-      })
-    }
-
-    // 4. Spotify: Abrir enlace al tocar
-    if (name.includes('spotify') || name.includes('spoti')) {
-      attachedEntities.add(eid)
-      console.log('[8thWall Interaction] Botón Spotify vinculado:', eid)
-      world.events.addListener(eid, 'click', () => {
-        console.log('[8thWall Interaction] Abriendo Spotify')
-        window.open(SOCIAL_URLS.spotify, '_blank')
-      })
-    }
-
-    // 5. Botón de Video: Reproducir / Pausar el video
-    if (name === 'button' || (name.includes('button') && !name.includes('wapp') && !name.includes('insta') && !name.includes('spoti'))) {
-      attachedEntities.add(eid)
-      console.log('[8thWall Interaction] Botón de Video vinculado:', eid)
-
-      const onVideoBtnClick = () => {
-        for (const vEid of world.allEntities) {
-          if (ecs.VideoControls.has(world, vEid)) {
-            const controls = ecs.VideoControls.get(world, vEid)
-            const isPaused = controls ? controls.paused : false
-            console.log('[8thWall Interaction] Alternando estado de video (pausa =', !isPaused, ')')
-            ecs.VideoControls.set(world, vEid, { paused: !isPaused })
-            break
-          }
+        if (name.includes('whatsapp') || name.includes('wapp') || x < -0.1) {
+          console.log('[8thWall Interaction] WhatsApp vinculado:', eid)
+          world.events.addListener(eid, 'click', () => {
+            console.log('[8thWall Interaction] Abriendo WhatsApp')
+            window.open(SOCIAL_URLS.whatsapp, '_blank')
+          })
+        } else if (name.includes('instagram') || name.includes('insta') || (x >= -0.1 && x <= 0.1)) {
+          console.log('[8thWall Interaction] Instagram vinculado:', eid)
+          world.events.addListener(eid, 'click', () => {
+            console.log('[8thWall Interaction] Abriendo Instagram')
+            window.open(SOCIAL_URLS.instagram, '_blank')
+          })
+        } else if (name.includes('spotify') || name.includes('spoti') || x > 0.1) {
+          console.log('[8thWall Interaction] Spotify vinculado:', eid)
+          world.events.addListener(eid, 'click', () => {
+            console.log('[8thWall Interaction] Abriendo Spotify')
+            window.open(SOCIAL_URLS.spotify, '_blank')
+          })
         }
       }
-
-      world.events.addListener(eid, 'click', onVideoBtnClick)
     }
   }
 })
