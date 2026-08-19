@@ -49,32 +49,42 @@ ecs.registerBehavior((world) => {
         continue
       }
 
-      // Botones de Redes Sociales (WhatsApp, Instagram, Spotify)
-      const threeObj = world.three && world.three.entityToObject ? world.three.entityToObject.get(eid) : null
-      if (threeObj) {
-        attachedEntities.add(eid)
-        const name = (threeObj.name || '').toLowerCase()
-        const x = threeObj.position.x
+      // Buscar el nombre navegando hacia arriba en la jerarquía de Three.js
+      let threeObj = world.three && world.three.entityToObject ? world.three.entityToObject.get(eid) : null
+      let entityName = ''
 
-        if (name.includes('whatsapp') || name.includes('wapp') || x < -0.1) {
-          console.log('[8thWall Interaction] WhatsApp vinculado:', eid)
-          world.events.addListener(eid, 'click', () => {
-            console.log('[8thWall Interaction] Abriendo WhatsApp')
-            window.open(SOCIAL_URLS.whatsapp, '_blank')
-          })
-        } else if (name.includes('instagram') || name.includes('insta') || (x >= -0.1 && x <= 0.1)) {
-          console.log('[8thWall Interaction] Instagram vinculado:', eid)
-          world.events.addListener(eid, 'click', () => {
-            console.log('[8thWall Interaction] Abriendo Instagram')
-            window.open(SOCIAL_URLS.instagram, '_blank')
-          })
-        } else if (name.includes('spotify') || name.includes('spoti') || x > 0.1) {
-          console.log('[8thWall Interaction] Spotify vinculado:', eid)
-          world.events.addListener(eid, 'click', () => {
-            console.log('[8thWall Interaction] Abriendo Spotify')
-            window.open(SOCIAL_URLS.spotify, '_blank')
-          })
+      let currentObj = threeObj
+      while (currentObj) {
+        if (currentObj.name) {
+          const n = currentObj.name.toLowerCase()
+          if (n.includes('whatsapp') || n.includes('wapp')) { entityName = 'whatsapp'; break }
+          if (n.includes('instagram') || n.includes('insta')) { entityName = 'instagram'; break }
+          if (n.includes('spotify') || n.includes('spoti')) { entityName = 'spotify'; break }
         }
+        currentObj = currentObj.parent
+      }
+
+      if (entityName === 'whatsapp') {
+        attachedEntities.add(eid)
+        console.log('[8thWall Interaction] WhatsApp vinculado:', eid)
+        world.events.addListener(eid, 'click', () => {
+          console.log('[8thWall Interaction] Abriendo WhatsApp')
+          window.open(SOCIAL_URLS.whatsapp, '_blank')
+        })
+      } else if (entityName === 'instagram') {
+        attachedEntities.add(eid)
+        console.log('[8thWall Interaction] Instagram vinculado:', eid)
+        world.events.addListener(eid, 'click', () => {
+          console.log('[8thWall Interaction] Abriendo Instagram')
+          window.open(SOCIAL_URLS.instagram, '_blank')
+        })
+      } else if (entityName === 'spotify') {
+        attachedEntities.add(eid)
+        console.log('[8thWall Interaction] Spotify vinculado:', eid)
+        world.events.addListener(eid, 'click', () => {
+          console.log('[8thWall Interaction] Abriendo Spotify')
+          window.open(SOCIAL_URLS.spotify, '_blank')
+        })
       }
     }
   }
