@@ -14,7 +14,7 @@ const VideoControlComponent = ecs.registerComponent({
   },
   schemaDefaults: {
     targetName: 'TarjetaProfesional',
-    videoSrc: 'assets/Video_.mp4',
+    videoSrc: 'assets/Penta_Tristana_1.mp4',
   },
   add: (world, component) => {
     world.events.addListener(component.eid, ecs.input.UI_CLICK, () => {
