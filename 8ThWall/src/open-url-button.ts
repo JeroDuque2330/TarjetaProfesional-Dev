@@ -39,27 +39,41 @@ export function navigateToUrl(url: string) {
 }
 
 /**
- * Identifica la URL según el identificador de la entidad, modelo o posición
+ * Determina la URL exacta según el EID de la entidad, componentes o posición 3D
  */
-export function getUrlFromIdentifier(identifierStr: string, customUrl?: string): string | null {
-  if (customUrl && customUrl.trim()) return customUrl.trim()
+export function getUrlForEid(world: ecs.World, eid: ecs.Eid): string {
+  const eidStr = String(eid).toLowerCase()
 
-  const str = (identifierStr || '').toLowerCase()
+  // 1. Por ID directo de entidad de .expanse.json
+  if (eidStr.includes('wapp') || eidStr.includes('whats')) return SOCIAL_LINKS.whatsapp
+  if (eidStr.includes('insta')) return SOCIAL_LINKS.instagram
+  if (eidStr.includes('spoti')) return SOCIAL_LINKS.spotify
 
-  // 1. WhatsApp
-  if (str.includes('whatsapp') || str.includes('whats') || str.includes('wa.me') || str.includes('wsp') || str.includes('wapp')) {
-    return SOCIAL_LINKS.whatsapp
-  }
-  // 2. Instagram
-  if (str.includes('instagram') || str.includes('insta') || str.includes('ig')) {
-    return SOCIAL_LINKS.instagram
-  }
-  // 3. Spotify
-  if (str.includes('spotify') || str.includes('spoti') || str.includes('music')) {
-    return SOCIAL_LINKS.spotify
-  }
+  // 2. Por el componente OpenUrlButtonComponent
+  try {
+    if (OpenUrlButtonComponent && OpenUrlButtonComponent.has(world, eid)) {
+      const data: any = OpenUrlButtonComponent.get(world, eid)
+      if (data?.url && typeof data.url === 'string' && data.url.startsWith('http')) {
+        return data.url
+      }
+    }
+  } catch (e) {}
 
-  return null
+  // 3. Por el nombre del objeto Three.js
+  const threeState = (world as any).three
+  const obj = threeState?.entityToObject?.get(eid)
+  const objName = (obj?.name || '').toLowerCase()
+
+  if (objName.includes('wapp') || objName.includes('whats') || objName.includes('wa.me')) return SOCIAL_LINKS.whatsapp
+  if (objName.includes('insta') || objName.includes('instagram')) return SOCIAL_LINKS.instagram
+  if (objName.includes('spoti') || objName.includes('spotify')) return SOCIAL_LINKS.spotify
+
+  // 4. Por la posición local en X dentro del Image Target
+  // WhatsApp está a la izquierda (X = -0.24), Instagram en el centro (X = 0), Spotify a la derecha (X = 0.26)
+  const posX = obj?.position?.x ?? 0
+  if (posX < -0.1) return SOCIAL_LINKS.whatsapp
+  if (posX > 0.1) return SOCIAL_LINKS.spotify
+  return SOCIAL_LINKS.instagram
 }
 
 /**
@@ -80,6 +94,21 @@ export function pulseObjectScale(obj: any) {
  * Maneja el toque utilizando Raycaster 3D de Three.js y proximidad 2D
  */
 function handleTouchOnIcons(world: ecs.World, clientX: number, clientY: number, targetEid?: ecs.Eid) {
+  // Si el evento viene con un target directo válido
+  if (targetEid) {
+    const eidStr = String(targetEid).toLowerCase()
+    if (eidStr.includes('wapp') || eidStr.includes('insta') || eidStr.includes('spoti')) {
+      const directUrl = getUrlForEid(world, targetEid)
+      if (directUrl) {
+        console.log(`[open-url-button] Target directo ${targetEid} -> ${directUrl}`)
+        const obj = (world as any).three?.entityToObject?.get(targetEid)
+        if (obj) pulseObjectScale(obj)
+        navigateToUrl(directUrl)
+        return
+      }
+    }
+  }
+
   const threeState = (world as any).three
   if (!threeState) return
 
@@ -92,46 +121,44 @@ function handleTouchOnIcons(world: ecs.World, clientX: number, clientY: number, 
   const entityToObject = threeState.entityToObject as Map<ecs.Eid, any>
   if (!entityToObject) return
 
-  const logoObjects: {eid: ecs.Eid; obj: any; url: string}[] = []
+  const logoEntries: {eid: ecs.Eid; obj: any; url: string}[] = []
 
   for (const [eid, obj] of entityToObject.entries()) {
     if (!obj || obj.visible === false) continue
 
-    let gltfSrc = ''
-    try {
-      if (ecs.GltfModel && ecs.GltfModel.has(world, eid)) {
-        const c: any = ecs.GltfModel.get(world, eid)
-        gltfSrc = c.src || c.url || ''
-      }
-    } catch (e) {}
-
     const objName = (obj.name || '').toLowerCase()
-    const fullId = `${objName} ${gltfSrc}`.toLowerCase()
+    const eidStr = String(eid).toLowerCase()
 
     if (
-      !fullId.includes('snoop') &&
-      !fullId.includes('plane') &&
-      !fullId.includes('video') &&
-      !fullId.includes('camera') &&
-      !fullId.includes('light')
+      objName.includes('snoop') ||
+      objName.includes('plano') ||
+      objName.includes('plane') ||
+      objName.includes('camera') ||
+      objName.includes('light') ||
+      objName === 'button' ||
+      objName === 'text' ||
+      objName === 'icon'
     ) {
-      let url = getUrlFromIdentifier(fullId)
+      continue
+    }
 
-      // Si es un botón UI de posición
-      if (!url && ecs.Ui && ecs.Ui.has(world, eid)) {
-        const posX = obj.position?.x || 0
-        if (posX < -0.12) url = SOCIAL_LINKS.whatsapp
-        else if (posX > 0.12) url = SOCIAL_LINKS.spotify
-        else url = SOCIAL_LINKS.instagram
-      }
-
+    if (
+      eidStr.includes('wapp') ||
+      eidStr.includes('insta') ||
+      eidStr.includes('spoti') ||
+      objName.includes('whatsapp') ||
+      objName.includes('instagram') ||
+      objName.includes('spotify') ||
+      (OpenUrlButtonComponent && OpenUrlButtonComponent.has(world, eid))
+    ) {
+      const url = getUrlForEid(world, eid)
       if (url) {
-        logoObjects.push({eid, obj, url})
+        logoEntries.push({eid, obj, url})
       }
     }
   }
 
-  // 1. Raycast 3D exacto con Three.js
+  // 1. Raycaster 3D exacto
   try {
     const THREE = (window as any).THREE || camera.constructor?.prototype ? (camera as any).constructor : null
     const RaycasterCtor = THREE?.Raycaster || (window as any).THREE?.Raycaster || (camera as any).raycaster?.constructor
@@ -144,13 +171,13 @@ function handleTouchOnIcons(world: ecs.World, clientX: number, clientY: number, 
       raycaster.setFromCamera(mouse, camera)
 
       const meshesToTest: any[] = []
-      const meshToLogoMap = new Map<any, {eid: ecs.Eid; obj: any; url: string}>()
+      const meshToEntryMap = new Map<any, {eid: ecs.Eid; obj: any; url: string}>()
 
-      for (const item of logoObjects) {
-        item.obj.traverse((child: any) => {
+      for (const entry of logoEntries) {
+        entry.obj.traverse((child: any) => {
           if (child.isMesh) {
             meshesToTest.push(child)
-            meshToLogoMap.set(child, item)
+            meshToEntryMap.set(child, entry)
           }
         })
       }
@@ -158,27 +185,27 @@ function handleTouchOnIcons(world: ecs.World, clientX: number, clientY: number, 
       const intersects = raycaster.intersectObjects(meshesToTest, false)
       if (intersects && intersects.length > 0) {
         const hitMesh = intersects[0].object
-        const matchedLogo = meshToLogoMap.get(hitMesh)
-        if (matchedLogo) {
-          console.log(`[open-url-button] Raycast 3D exacto: ${matchedLogo.url}`)
-          pulseObjectScale(matchedLogo.obj)
-          navigateToUrl(matchedLogo.url)
+        const matched = meshToEntryMap.get(hitMesh)
+        if (matched) {
+          console.log(`[open-url-button] Raycast 3D exacto: ${matched.url}`)
+          pulseObjectScale(matched.obj)
+          navigateToUrl(matched.url)
           return
         }
       }
     }
-  } catch (rayErr) {}
+  } catch (e) {}
 
-  // 2. Proyección 2D en pantalla (Fallback por proximidad)
+  // 2. Proyección 2D en pantalla (Proximidad táctil)
   let closestMatch: {obj: any; url: string; dist: number} | null = null
-  let minDistance = 120
+  let minDistance = 70 // Límite estricto de 70px para evitar cruce de botones cercanos
 
-  for (const item of logoObjects) {
-    const obj = item.obj
+  for (const entry of logoEntries) {
+    const obj = entry.obj
     let objDist = Infinity
 
     try {
-      const Vector3Class = camera.position?.constructor
+      const Vector3Class = camera.position?.constructor || (window as any).THREE?.Vector3
       if (Vector3Class && camera.project) {
         const worldPos = new Vector3Class()
         if (obj.getWorldPosition) obj.getWorldPosition(worldPos)
@@ -197,19 +224,19 @@ function handleTouchOnIcons(world: ecs.World, clientX: number, clientY: number, 
 
     if (objDist < minDistance) {
       minDistance = objDist
-      closestMatch = {obj, url: item.url, dist: objDist}
+      closestMatch = {obj, url: entry.url, dist: objDist}
     }
   }
 
   if (closestMatch && closestMatch.url) {
-    console.log(`[open-url-button] Proximidad 2D: ${closestMatch.url} (${Math.round(closestMatch.dist)}px)`)
+    console.log(`[open-url-button] Proximidad 2D detectó: ${closestMatch.url} (${Math.round(closestMatch.dist)}px)`)
     pulseObjectScale(closestMatch.obj)
     navigateToUrl(closestMatch.url)
   }
 }
 
 /**
- * Registro de Componentes ECS
+ * Registro de Componente ECS Principal
  */
 const OpenUrlButtonComponent = ecs.registerComponent({
   name: 'open-url-button',
@@ -222,53 +249,23 @@ const OpenUrlButtonComponent = ecs.registerComponent({
     target: '_blank',
   },
   add: (world, component) => {
-    const act = () => {
-      const obj = (world as any).three?.entityToObject?.get(component.eid)
-      const url = getUrlFromIdentifier(obj?.name || '', (component as any).schema?.url)
+    const handleAction = () => {
+      const url = getUrlForEid(world, component.eid)
+      console.log(`[open-url-button] Click en entidad ${component.eid} -> URL: ${url}`)
       if (url) {
+        const obj = (world as any).three?.entityToObject?.get(component.eid)
         if (obj) pulseObjectScale(obj)
         navigateToUrl(url)
       }
     }
-    world.events.addListener(component.eid, ecs.input.UI_CLICK, act)
-    world.events.addListener(component.eid, ecs.input.SCREEN_TOUCH_START, act)
-    world.events.addListener(component.eid, 'click', act)
+
+    world.events.addListener(component.eid, ecs.input.UI_CLICK, handleAction)
+    world.events.addListener(component.eid, ecs.input.SCREEN_TOUCH_START, handleAction)
+    world.events.addListener(component.eid, 'click', handleAction)
   },
 })
 
-// Registro de componentes específicos de redes sociales
-try {
-  ecs.registerComponent({
-    name: 'open-whatsapp',
-    add: (world, component) => {
-      const act = () => navigateToUrl(SOCIAL_LINKS.whatsapp)
-      world.events.addListener(component.eid, ecs.input.UI_CLICK, act)
-      world.events.addListener(component.eid, ecs.input.SCREEN_TOUCH_START, act)
-      world.events.addListener(component.eid, 'click', act)
-    },
-  })
-
-  ecs.registerComponent({
-    name: 'open-instagram',
-    add: (world, component) => {
-      const act = () => navigateToUrl(SOCIAL_LINKS.instagram)
-      world.events.addListener(component.eid, ecs.input.UI_CLICK, act)
-      world.events.addListener(component.eid, ecs.input.SCREEN_TOUCH_START, act)
-      world.events.addListener(component.eid, 'click', act)
-    },
-  })
-
-  ecs.registerComponent({
-    name: 'open-spotify',
-    add: (world, component) => {
-      const act = () => navigateToUrl(SOCIAL_LINKS.spotify)
-      world.events.addListener(component.eid, ecs.input.UI_CLICK, act)
-      world.events.addListener(component.eid, ecs.input.SCREEN_TOUCH_START, act)
-      world.events.addListener(component.eid, 'click', act)
-    },
-  })
-} catch (e) {}
-
+// Registro de comportamiento global táctil
 let isGlobalAttached = false
 ecs.registerComponent({
   name: 'open-url-global-behavior',
@@ -296,3 +293,4 @@ ecs.registerComponent({
 })
 
 export default OpenUrlButtonComponent
+
