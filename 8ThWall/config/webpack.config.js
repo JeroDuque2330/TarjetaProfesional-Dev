@@ -83,6 +83,24 @@ const config = {
     compress: true,
     hot: true,
     liveReload: false,
+    static: [
+      {
+        directory: path.join(rootPath, 'image-targets'),
+        publicPath: '/image-targets',
+      },
+      {
+        directory: path.join(srcPath, 'assets'),
+        publicPath: '/assets',
+      },
+      {
+        directory: path.join(rootPath, 'node_modules/@8thwall/ecs/dist'),
+        publicPath: '/external/runtime',
+      },
+      {
+        directory: path.join(rootPath, 'node_modules/@8thwall/engine-binary/dist'),
+        publicPath: '/external/xr',
+      },
+    ],
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
@@ -113,6 +131,16 @@ module.exports = (_, argv) => {
           }],
         }),
       ],
+      devServer: {
+        ...config.devServer,
+        static: [
+          ...(config.devServer.static || []),
+          {
+            directory: path.join(rootPath, 'node_modules/@8thwall/ecs/dev8'),
+            publicPath: '/external/dev8',
+          },
+        ],
+      },
     }
   }
 

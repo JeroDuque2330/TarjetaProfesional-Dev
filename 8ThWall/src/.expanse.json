@@ -81,8 +81,7 @@
             "clip1": "Bailecito Hip Hop",
             "clip2": "Bailecito Tranquilito"
           }
-        },
-        "character-toggle": {}
+        }
       },
       "gltfModel": {
         "src": {
@@ -164,7 +163,6 @@
       "material": null,
       "parentId": "f68f517b-4d60-4960-a637-0da9d937912a",
       "components": {
-        "video-button": {},
         "comp-video-toggle-btn": {
           "id": "comp-video-toggle-btn",
           "name": "video-toggle-button",
@@ -200,11 +198,7 @@
       "ui": {
         "width": 16,
         "height": 16,
-        "image": {
-          "type": "url",
-          "url": "https://cdn.8thwall.com/web/assets/sprites/8w-icon-m8j35d7y.png"
-        },
-        "backgroundOpacity": 1
+        "backgroundOpacity": 0
       },
       "order": 0.014952728539884108
     },
@@ -237,7 +231,6 @@
       "material": null,
       "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
       "components": {
-        "open-whatsapp": {},
         "comp-wapp": {
           "id": "comp-wapp",
           "name": "open-url-button",
@@ -266,7 +259,6 @@
       "material": null,
       "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
       "components": {
-        "open-instagram": {},
         "comp-insta": {
           "id": "comp-insta",
           "name": "open-url-button",
@@ -295,7 +287,6 @@
       "material": null,
       "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
       "components": {
-        "open-spotify": {},
         "comp-spoti": {
           "id": "comp-spoti",
           "name": "open-url-button",
