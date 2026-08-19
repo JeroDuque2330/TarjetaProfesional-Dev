@@ -1,8 +1,2 @@
-import * as ecs from '@8thwall/ecs'
-
-ecs.registerComponent({
-  name: 'example-component',
-  add: () => {
-    console.log('Component attached.')
-  },
-})
+// example-component.ts - Migrado a app-interactions.js
+export default {}
