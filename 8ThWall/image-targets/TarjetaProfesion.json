@@ -1,0 +1,23 @@
+{
+  "type": "PLANAR",
+  "properties": {
+    "top": 85,
+    "left": 0,
+    "width": 1024,
+    "height": 1365,
+    "isRotated": false,
+    "originalWidth": 1024,
+    "originalHeight": 1536
+  },
+  "imagePath": "image-targets/TarjetaProfesion_luminance.jpg",
+  "metadata": null,
+  "name": "TarjetaProfesion",
+  "resources": {
+    "originalImage": "TarjetaProfesion_original.jpg",
+    "croppedImage": "TarjetaProfesion_cropped.jpg",
+    "thumbnailImage": "TarjetaProfesion_thumbnail.jpg",
+    "luminanceImage": "TarjetaProfesion_luminance.jpg"
+  },
+  "created": 1787147575168,
+  "updated": 1787152078386
+}
