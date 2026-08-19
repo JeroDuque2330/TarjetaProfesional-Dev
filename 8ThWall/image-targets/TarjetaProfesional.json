@@ -1,23 +1,23 @@
 {
   "type": "PLANAR",
   "properties": {
-    "top": 140,
+    "top": 114,
     "left": 0,
-    "width": 1686,
-    "height": 2248,
+    "width": 1365,
+    "height": 1820,
     "isRotated": false,
-    "originalWidth": 1686,
-    "originalHeight": 2528
+    "originalWidth": 1365,
+    "originalHeight": 2048
   },
-  "imagePath": "image-targets/TarjetaProfesional_luminance.jpg",
+  "imagePath": "image-targets/TarjetaProfesional_luminance.png",
   "metadata": null,
   "name": "TarjetaProfesional",
   "resources": {
-    "originalImage": "TarjetaProfesional_original.jpg",
-    "croppedImage": "TarjetaProfesional_cropped.jpg",
-    "thumbnailImage": "TarjetaProfesional_thumbnail.jpg",
-    "luminanceImage": "TarjetaProfesional_luminance.jpg"
+    "originalImage": "TarjetaProfesional_original.png",
+    "croppedImage": "TarjetaProfesional_cropped.png",
+    "thumbnailImage": "TarjetaProfesional_thumbnail.png",
+    "luminanceImage": "TarjetaProfesional_luminance.png"
   },
-  "created": 1787152067177,
-  "updated": 1787152088992
+  "created": 1787154537260,
+  "updated": 1787154556408
 }
