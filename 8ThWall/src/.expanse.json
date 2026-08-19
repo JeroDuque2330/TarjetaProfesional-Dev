@@ -115,14 +115,17 @@
       "geometry": null,
       "material": null,
       "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
-      "components": {},
+      "components": {
+        "character-toggle": {}
+      },
       "gltfModel": {
         "src": {
           "type": "asset",
           "asset": "assets/Snoop_Final.glb"
         },
         "animationClip": "Bailecito Hip Hop",
-        "loop": true
+        "loop": true,
+        "collider": true
       },
       "name": "Snoop_Final.glb",
       "order": 4.551449927932822
@@ -197,8 +200,8 @@
       "id": "f9736927-15fb-4047-bfa2-87fd5ac7ffe3",
       "position": [
         0,
-        0.41086769015251356,
-        0.050000000000000266
+        0,
+        0.05
       ],
       "rotation": [
         0,
@@ -214,7 +217,9 @@
       "geometry": null,
       "material": null,
       "parentId": "f68f517b-4d60-4960-a637-0da9d937912a",
-      "components": {},
+      "components": {
+        "video-button": {}
+      },
       "ui": {
         "type": "3d",
         "width": 100,
@@ -319,7 +324,9 @@
       "geometry": null,
       "material": null,
       "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
-      "components": {},
+      "components": {
+        "open-whatsapp": {}
+      },
       "ui": {
         "type": "3d",
         "width": 36,
@@ -352,7 +359,9 @@
       "geometry": null,
       "material": null,
       "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
-      "components": {},
+      "components": {
+        "open-instagram": {}
+      },
       "ui": {
         "type": "3d",
         "width": 36,
@@ -385,7 +394,9 @@
       "geometry": null,
       "material": null,
       "parentId": "d3095e1b-bea4-4bc3-a74c-2441e054fe7b",
-      "components": {},
+      "components": {
+        "open-spotify": {}
+      },
       "ui": {
         "type": "3d",
         "width": 36,
