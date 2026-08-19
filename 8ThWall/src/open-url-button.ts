@@ -4,7 +4,7 @@ import * as ecs from '@8thwall/ecs'
  * Enlaces Oficiales de Redes Sociales
  */
 export const SOCIAL_LINKS = {
-  whatsapp: 'https://wa.me/573154445000',
+  whatsapp: 'https://winmedik.com/',
   instagram: 'https://www.instagram.com/jeronimoduque423/',
   spotify: 'https://open.spotify.com/user/o0gt0327bv62udbgzyjh0qomt?si=076634e60fe84ede',
 }
